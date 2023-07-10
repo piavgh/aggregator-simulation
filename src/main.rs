@@ -8,7 +8,7 @@ use axum::http::{
     header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
     HeaderValue, Method,
 };
-use dotenv::dotenv;
+use dotenvy::dotenv;
 use route::create_router;
 use tower_http::cors::CorsLayer;
 
