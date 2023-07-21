@@ -45,3 +45,20 @@ pub struct BuildRouteParamsWithoutChain {
     // permit allows user to swap without approving token beforehand
     // pub permit: Option<String>,
 }
+
+pub struct SimulateTenderlyParams {
+    /* Simulation Configuration */
+    pub save: bool,
+    pub save_if_fails: bool,
+    pub simulation_type: String,
+
+    network_id: String,
+
+    /* Standard EVM Transaction object */
+    from: String,
+    to: String,
+    input: String,
+    gas: u64,
+    gas_price: u64,
+    value: u64,
+}

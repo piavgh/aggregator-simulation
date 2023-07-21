@@ -57,7 +57,11 @@ async fn get_routes(
     ];
 
     let client = reqwest::Client::new();
-    let http_response = client.get(api_url).query(&query).send().await?;
+
+    let http_response = client.get(api_url).query(&query).header(
+        "user-agent",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    ).send().await?;
 
     match http_response.status() {
         reqwest::StatusCode::OK => {
@@ -111,7 +115,10 @@ async fn build_route(params: BuildRouteParams) -> Result<BuildRouteResponseData,
     };
 
     let client = reqwest::Client::new();
-    let http_response = client.post(api_url).json(&p).send().await?;
+    let http_response = client.post(api_url).json(&p).header(
+        "user-agent",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+    ).send().await?;
 
     match http_response.status() {
         reqwest::StatusCode::OK => {
