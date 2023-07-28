@@ -1,5 +1,5 @@
 start-server:
-	cargo watch -q -c -w src/ -x "shuttle run"
+	cargo watch -q -c -w src/ -x run
 
 install-packages:
 	cargo add axum

@@ -12,8 +12,8 @@ use dotenvy::dotenv;
 use route::create_router;
 use tower_http::cors::CorsLayer;
 
-#[shuttle_runtime::main]
-async fn axum() -> shuttle_axum::ShuttleAxum {
+#[tokio::main]
+async fn main() {
     dotenv().ok();
 
     let cors = CorsLayer::new()
@@ -25,5 +25,18 @@ async fn axum() -> shuttle_axum::ShuttleAxum {
     let router = create_router().layer(cors);
 
     println!("🚀 Server started successfully");
-    Ok(router.into())
+    axum::Server::bind(&"0.0.0.0:8000".parse().unwrap())
+        .serve(router.into_make_service())
+        .with_graceful_shutdown(shutdown_signal())
+        .await
+        .unwrap();
+}
+
+/// Tokio signal handler that will wait for a user to press CTRL+C.
+/// We use this in our hyper `Server` method `with_graceful_shutdown`.
+async fn shutdown_signal() {
+    tokio::signal::ctrl_c()
+        .await
+        .expect("Expect shutdown signal handler");
+    println!("signal shutdown");
 }
