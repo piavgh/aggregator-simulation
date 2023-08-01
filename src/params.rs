@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
+use serde_with::{serde_as, BoolFromInt, PickFirst};
 
 use crate::model::RouteSummary;
 
+#[serde_as]
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct GetRouteEncodeParams {
@@ -9,6 +11,7 @@ pub struct GetRouteEncodeParams {
     pub token_in: String,
     pub token_out: String,
     pub amount_in: String,
+    #[serde_as(as = "PickFirst<(_,BoolFromInt)>")]
     pub save_gas: bool,
     pub recipient: String,
 }
